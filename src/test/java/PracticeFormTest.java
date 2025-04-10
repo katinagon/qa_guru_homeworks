@@ -3,9 +3,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PracticeFormTest {
@@ -14,18 +13,16 @@ public class PracticeFormTest {
         Configuration.browserSize = "1920x1080";
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.pageLoadStrategy = "eager";
-        Configuration.timeout = 5000;
     }
+
     @Test
     @DisplayName("Успешное заполнение всех полей формы")
-    public void fillAllRegistrationForm() {
-        File img = new File("src/test/resources/img.png");
-
+    public void fillAllRegistrationFormTest() {
         open("/automation-practice-form");
         $("#firstName").setValue("Ivan");
         $("#lastName").setValue("Ivanov");
         $("#userEmail").setValue("ivan@test.com");
-        $("label[for=gender-radio-1]").click();
+        $("#genterWrapper").$(byText("Male")).click();
         $("#userNumber").setValue("9991234590");
         $("#dateOfBirthInput").click();
 
@@ -44,7 +41,7 @@ public class PracticeFormTest {
         $("label[for=hobbies-checkbox-2]").click();
         $("label[for=hobbies-checkbox-3]").click();
 
-        $("#uploadPicture").uploadFile(img); // Загрузка картинки
+        $("#uploadPicture").uploadFromClasspath("img.png"); // Загрузка картинки
 
         $("#currentAddress").setValue("Test Address 1/2");
 
@@ -57,15 +54,15 @@ public class PracticeFormTest {
         $(".text-right").click(); // Отправка формы
 
         // Проверки
-        $("tbody").$("tr",0).$("td",1).shouldHave(text("Ivan Ivanov"));
-        $("tbody").$("tr",1).$("td",1).shouldHave(text("ivan@test.com"));
-        $("tbody").$("tr",2).$("td",1).shouldHave(text("Male"));
-        $("tbody").$("tr",3).$("td",1).shouldHave(text("9991234590"));
-        $("tbody").$("tr",4).$("td",1).shouldHave(text("14 July,1995"));
-        $("tbody").$("tr",5).$("td",1).shouldHave(text("Computer Science, Physics"));
-        $("tbody").$("tr",6).$("td",1).shouldHave(text("Reading, Music"));
-        $("tbody").$("tr",7).$("td",1).shouldHave(text("img.png"));
-        $("tbody").$("tr",8).$("td",1).shouldHave(text("Test Address 1/2"));
-        $("tbody").$("tr",9).$("td",1).shouldHave(text("Haryana Karnal"));
+        $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text("Ivan Ivanov"));
+        $(".table-responsive").$(byText("Student Email")).parent().shouldHave(text("ivan@test.com"));
+        $(".table-responsive").$(byText("Gender")).parent().shouldHave(text("Male"));
+        $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text("9991234590"));
+        $(".table-responsive").$(byText("Date of Birth")).parent().shouldHave(text("14 July,1995"));
+        $(".table-responsive").$(byText("Subjects")).parent().shouldHave(text("Computer Science, Physics"));
+        $(".table-responsive").$(byText("Hobbies")).parent().shouldHave(text("Reading, Music"));
+        $(".table-responsive").$(byText("Picture")).parent().shouldHave(text("img.png"));
+        $(".table-responsive").$(byText("Address")).parent().shouldHave(text("Test Address 1/2"));
+        $(".table-responsive").$(byText("State and City")).parent().shouldHave(text("Haryana Karnal"));
     }
 }
