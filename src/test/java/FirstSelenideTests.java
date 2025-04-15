@@ -33,6 +33,18 @@ public class FirstSelenideTests {
                 .closest(".markdown-heading") // находим ближайшего предка уровнем выше
                 .sibling(0) // следующий элемент в DOM за .markdown-heading
                 .$("pre")
-                .shouldHave(text("@ExtendWith({SoftAssertsExtension.class})"));
+                .shouldHave(text("""
+                        @ExtendWith({SoftAssertsExtension.class})
+                        class Tests {
+                          @Test
+                          void test() {
+                            Configuration.assertionMode = SOFT;
+                            open("page.html");
+                        
+                            $("#first").should(visible).click();
+                            $("#second").should(visible).click();
+                          }
+                        }
+                        """));
     }
 }
