@@ -1,3 +1,4 @@
+import com.codeborne.selenide.DragAndDropOptions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,4 +25,6 @@ public class SecondSelenideTests {
         $("#column-a header").shouldHave(text("B"));
         $("#column-b header").shouldHave(text("A"));
     }
+    /* При  $("#column-a").dragAndDrop($("#column-b")); будет ошибка комплиляции.
+       С помощью $("#column-a").dragAndDrop(DragAndDropOptions.to("#column-b")); тест пройдет.*/
 }
