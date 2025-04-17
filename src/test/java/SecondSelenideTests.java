@@ -1,4 +1,3 @@
-import com.codeborne.selenide.DragAndDropOptions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +20,8 @@ public class SecondSelenideTests {
     @DisplayName("Drag And Drop")
     void programDragAndDropTest() {
         open("https://the-internet.herokuapp.com/drag_and_drop");
+        $("#column-a header").shouldHave(text("A"));
+        $("#column-b header").shouldHave(text("B"));
         actions().clickAndHold($("#column-a")).moveToElement($("#column-b")).release().perform();
         $("#column-a header").shouldHave(text("B"));
         $("#column-b header").shouldHave(text("A"));
