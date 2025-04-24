@@ -1,3 +1,5 @@
+package tests;
+
 import static com.codeborne.selenide.Condition.href;
 import static com.codeborne.selenide.Selenide.*;
 
