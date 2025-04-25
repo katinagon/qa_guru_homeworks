@@ -12,7 +12,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class StudentRegistrationPage {
-    private SelenideElement firstNameInput = $("#firstName"),
+    private final SelenideElement firstNameInput = $("#firstName"),
             lastNameInput = $("#lastName"),
             userEmailInput = $("#userEmail"),
             genderWrapper = $("#genterWrapper"),
@@ -31,11 +31,11 @@ public class StudentRegistrationPage {
             submitBtn = $(".text-right");
     //tableResult = $(".table-responsive");
 
-    private String image = "img.png";
-    private CalendarComponent calendarComponent = new CalendarComponent();
-    private ResultTable resultTable = new ResultTable();
-    private Input input = new Input();
-    private RadioButton radioButton = new RadioButton();
+    private final String image = "img.png";
+    private final CalendarComponent calendarComponent = new CalendarComponent();
+    private final ResultTable resultTable = new ResultTable();
+    private final Input input = new Input();
+    private final RadioButton radioButton = new RadioButton();
 
     public StudentRegistrationPage openPage() {
         open("/automation-practice-form");
