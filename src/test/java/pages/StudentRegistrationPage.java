@@ -29,7 +29,6 @@ public class StudentRegistrationPage {
             citySelect = $("#city"),
             citySelectPoint = $("#react-select-4-option-0"),
             submitBtn = $(".text-right");
-    //tableResult = $(".table-responsive");
 
     private final String image = "img.png";
     private final CalendarComponent calendarComponent = new CalendarComponent();
