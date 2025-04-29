@@ -4,77 +4,81 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.StudentRegistrationPage;
 
+import static tests.TestData.*;
+
 public class StudentRegistrationPageTests extends TestBaseDemoQA {
     StudentRegistrationPage studentRegistrationPage = new StudentRegistrationPage();
+    TestData testData = new TestData();
 
     @Test
     @DisplayName("Успешная отправка формы регистрации со всеми заполненными полями")
     public void successSubmitRegFormWithAllFieldsTest() {
         studentRegistrationPage.openPage()
-                .setFirstName("Ivan")
-                .setLastName("Ivanov")
-                .setUserEmail("ivan@test.com")
-                .setGender("Male")
-                .setUserNumber("9991234590")
-                .setDateOfBirth("14", "July", "1995")
-                .selectSubjects("Physics")
+                .setFirstName(testData.firstName)
+                .setLastName(testData.lastName)
+                .setUserEmail(email)
+                .setGender(gender)
+                .setUserNumber(testData.phoneNumber)
+                .setDateOfBirth(calendarDay, calendarMonth, calendarYear)
+                .selectSubjects(subject)
                 .setHobbiesCheckBox()
                 .selectPicture()
-                .setAddress("Test Address 1/2")
+                .setAddress(testData.address)
                 .setStateAndCity()
                 .submitForm();
-        studentRegistrationPage.checkResult("Student Name", "Ivan Ivanov")
-                .checkResult("Student Email", "ivan@test.com")
-                .checkResult("Gender", "Male")
-                .checkResult("Mobile", "9991234590")
-                .checkResult("Date of Birth", "14 July,1995")
-                .checkResult("Subjects", "Physics")
-                .checkResult("Hobbies", "Reading, Music")
-                .checkResult("Picture", "img.png")
-                .checkResult("Address", "Test Address 1/2")
-                .checkResult("State and City", "Haryana Karnal");
+        studentRegistrationPage.checkResult("Student Name", testData.firstName + " " + testData.lastName)
+                .checkResult("Student Email", email)
+                .checkResult("Gender", gender)
+                .checkResult("Mobile", testData.phoneNumber)
+                .checkResult("Date of Birth", calendarDay + " " + calendarMonth + ","
+                    + calendarYear)
+                .checkResult("Subjects", subject)
+                .checkResult("Hobbies", hobby)
+                .checkResult("Picture", image)
+                .checkResult("Address", testData.address)
+                .checkResult("State and City", stateSelectPoint + " " + citySelectPoint);
     }
 
     @Test
     @DisplayName("Успешная отправка формы регистрации с обязательными полями")
     public void successSubmitRegFormWithRequiredFieldsTest() {
         studentRegistrationPage.openPage()
-                .setFirstName("Ivan")
-                .setLastName("Ivanov")
-                .setGender("Male")
-                .setUserNumber("9991234590")
+                .setFirstName(testData.firstName)
+                .setLastName(testData.lastName)
+                .setGender(gender)
+                .setUserNumber(testData.phoneNumber)
                 .submitForm();
-        studentRegistrationPage.checkResult("Student Name", "Ivan Ivanov")
-                .checkResult("Gender", "Male")
-                .checkResult("Mobile", "9991234590");
+        studentRegistrationPage.checkResult("Student Name", testData.firstName + " " + testData.lastName)
+                .checkResult("Gender", gender)
+                .checkResult("Mobile", testData.phoneNumber);
     }
 
     @Test
     @DisplayName("Неуспешная отправка формы регистрации при незаполненном имени")
     public void unsuccessSubmitRegFormWithoutFirstNameTest() {
         studentRegistrationPage.openPage()
-                .setLastName("Ivanov")
-                .setGender("Male")
-                .setUserNumber("9991234590")
+                .setLastName(testData.lastName)
+                .setGender(gender)
+                .setUserNumber(testData.phoneNumber)
                 .submitForm();
         studentRegistrationPage.checkEmptyInput("firstNameInput")
-                .checkiFilledInput("lastNameInput", "Ivanov")
-                .checkFilledRadioButton("Male")
-                .checkiFilledInput("userNumberInput", "9991234590");
+                .checkiFilledInput("lastNameInput", testData.lastName)
+                .checkFilledRadioButton(gender)
+                .checkiFilledInput("userNumberInput", testData.phoneNumber);
     }
 
     @Test
     @DisplayName("Неуспешная отправка формы регистрации при незаполненной фамилии")
     public void unsuccessSubmitRegFormWithoutLastNameTest() {
         studentRegistrationPage.openPage()
-                .setFirstName("Ivan")
-                .setGender("Male")
-                .setUserNumber("9991234590")
+                .setFirstName(testData.firstName)
+                .setGender(gender)
+                .setUserNumber(testData.phoneNumber)
                 .submitForm();
         studentRegistrationPage.checkEmptyInput("lastNameInput")
-                .checkiFilledInput("firstNameInput", "Ivan")
-                .checkFilledRadioButton("Male")
-                .checkiFilledInput("userNumberInput", "9991234590");
+                .checkiFilledInput("firstNameInput", testData.firstName)
+                .checkFilledRadioButton(gender)
+                .checkiFilledInput("userNumberInput", testData.phoneNumber);
     }
 
     @Test

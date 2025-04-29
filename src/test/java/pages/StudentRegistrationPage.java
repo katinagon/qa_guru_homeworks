@@ -5,13 +5,20 @@ import pages.components.CalendarComponent;
 import pages.components.Input;
 import pages.components.RadioButton;
 import pages.components.ResultTable;
+import tests.TestData;
 
 import static com.codeborne.selenide.Condition.exactValue;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
+import static tests.TestData.*;
 
 public class StudentRegistrationPage {
+    private final CalendarComponent calendarComponent = new CalendarComponent();
+    private final ResultTable resultTable = new ResultTable();
+    private final Input input = new Input();
+    private final RadioButton radioButton = new RadioButton();
+
     private final SelenideElement firstNameInput = $("#firstName"),
             lastNameInput = $("#lastName"),
             userEmailInput = $("#userEmail"),
@@ -20,21 +27,18 @@ public class StudentRegistrationPage {
             calendarInput = $("#dateOfBirthInput"),
             subjectsInput = $("#subjectsInput"),
             subjectSelectPoint = $("#react-select-2-option-0"),
-            hobbiesReadingCheckBox = $("label[for=hobbies-checkbox-2]"),
-            hobbiesMusicCheckBox = $("label[for=hobbies-checkbox-3]"),
+            hobbiesCheckBox = $(byText(hobby)),
+            //hobbiesSportsCheckBox = $("label[for=hobbies-checkbox-1]"),
+            //hobbiesReadingCheckBox = $("label[for=hobbies-checkbox-2]"),
+            //hobbiesMusicCheckBox = $("label[for=hobbies-checkbox-3]"),
             uploadPictureBtn = $("#uploadPicture"),
             addressInput = $("#currentAddress"),
             stateSelect = $("#state"),
-            stateSelectPoint = $("#react-select-3-option-2"),
+            //stateSelectPoint = $("#react-select-3-option-2"),
+            stateSelectPoint = $(byText(TestData.stateSelectPoint)),
             citySelect = $("#city"),
-            citySelectPoint = $("#react-select-4-option-0"),
+            citySelectPoint = $(byText(TestData.citySelectPoint)),
             submitBtn = $(".text-right");
-
-    private final String image = "img.png";
-    private final CalendarComponent calendarComponent = new CalendarComponent();
-    private final ResultTable resultTable = new ResultTable();
-    private final Input input = new Input();
-    private final RadioButton radioButton = new RadioButton();
 
     public StudentRegistrationPage openPage() {
         open("/automation-practice-form");
@@ -79,8 +83,7 @@ public class StudentRegistrationPage {
     }
 
     public StudentRegistrationPage setHobbiesCheckBox() {
-        hobbiesReadingCheckBox.click();
-        hobbiesMusicCheckBox.click();
+        hobbiesCheckBox.click();
         return this;
     }
 
