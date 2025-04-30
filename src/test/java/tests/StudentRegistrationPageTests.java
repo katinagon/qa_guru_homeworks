@@ -8,34 +8,33 @@ import static tests.TestData.*;
 
 public class StudentRegistrationPageTests extends TestBaseDemoQA {
     StudentRegistrationPage studentRegistrationPage = new StudentRegistrationPage();
-    TestData testData = new TestData();
 
     @Test
     @DisplayName("Успешная отправка формы регистрации со всеми заполненными полями")
     public void successSubmitRegFormWithAllFieldsTest() {
         studentRegistrationPage.openPage()
-                .setFirstName(testData.firstName)
-                .setLastName(testData.lastName)
+                .setFirstName(firstName)
+                .setLastName(lastName)
                 .setUserEmail(email)
                 .setGender(gender)
-                .setUserNumber(testData.phoneNumber)
+                .setUserNumber(phoneNumber)
                 .setDateOfBirth(calendarDay, calendarMonth, calendarYear)
                 .selectSubjects(subject)
                 .setHobbiesCheckBox()
                 .selectPicture()
-                .setAddress(testData.address)
+                .setAddress(address)
                 .setStateAndCity()
                 .submitForm();
-        studentRegistrationPage.checkResult("Student Name", testData.firstName + " " + testData.lastName)
+        studentRegistrationPage.checkResult("Student Name", firstName + " " + lastName)
                 .checkResult("Student Email", email)
                 .checkResult("Gender", gender)
-                .checkResult("Mobile", testData.phoneNumber)
+                .checkResult("Mobile", phoneNumber)
                 .checkResult("Date of Birth", calendarDay + " " + calendarMonth + ","
                     + calendarYear)
                 .checkResult("Subjects", subject)
                 .checkResult("Hobbies", hobby)
                 .checkResult("Picture", image)
-                .checkResult("Address", testData.address)
+                .checkResult("Address", address)
                 .checkResult("State and City", stateSelectPoint + " " + citySelectPoint);
     }
 
@@ -43,42 +42,42 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
     @DisplayName("Успешная отправка формы регистрации с обязательными полями")
     public void successSubmitRegFormWithRequiredFieldsTest() {
         studentRegistrationPage.openPage()
-                .setFirstName(testData.firstName)
-                .setLastName(testData.lastName)
+                .setFirstName(firstName)
+                .setLastName(lastName)
                 .setGender(gender)
-                .setUserNumber(testData.phoneNumber)
+                .setUserNumber(phoneNumber)
                 .submitForm();
-        studentRegistrationPage.checkResult("Student Name", testData.firstName + " " + testData.lastName)
+        studentRegistrationPage.checkResult("Student Name",firstName + " " + lastName)
                 .checkResult("Gender", gender)
-                .checkResult("Mobile", testData.phoneNumber);
+                .checkResult("Mobile", phoneNumber);
     }
 
     @Test
     @DisplayName("Неуспешная отправка формы регистрации при незаполненном имени")
     public void unsuccessSubmitRegFormWithoutFirstNameTest() {
         studentRegistrationPage.openPage()
-                .setLastName(testData.lastName)
+                .setLastName(lastName)
                 .setGender(gender)
-                .setUserNumber(testData.phoneNumber)
+                .setUserNumber(phoneNumber)
                 .submitForm();
         studentRegistrationPage.checkEmptyInput("firstNameInput")
-                .checkiFilledInput("lastNameInput", testData.lastName)
+                .checkiFilledInput("lastNameInput", lastName)
                 .checkFilledRadioButton(gender)
-                .checkiFilledInput("userNumberInput", testData.phoneNumber);
+                .checkiFilledInput("userNumberInput", phoneNumber);
     }
 
     @Test
     @DisplayName("Неуспешная отправка формы регистрации при незаполненной фамилии")
     public void unsuccessSubmitRegFormWithoutLastNameTest() {
         studentRegistrationPage.openPage()
-                .setFirstName(testData.firstName)
+                .setFirstName(firstName)
                 .setGender(gender)
-                .setUserNumber(testData.phoneNumber)
+                .setUserNumber(phoneNumber)
                 .submitForm();
         studentRegistrationPage.checkEmptyInput("lastNameInput")
-                .checkiFilledInput("firstNameInput", testData.firstName)
+                .checkiFilledInput("firstNameInput", firstName)
                 .checkFilledRadioButton(gender)
-                .checkiFilledInput("userNumberInput", testData.phoneNumber);
+                .checkiFilledInput("userNumberInput", phoneNumber);
     }
 
     @Test
