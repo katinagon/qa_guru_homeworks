@@ -4,7 +4,7 @@ import com.github.javafaker.Faker;
 
 import java.util.Locale;
 
-public class TestData {
+public class TestDataDemoQA {
     static Faker fakerRU = new Faker(new Locale("ru"));
     static Faker fakerEN = new Faker(new Locale("en"));
 

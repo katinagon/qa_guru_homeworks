@@ -2,9 +2,15 @@ package tests;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import pages.StudentRegistrationPage;
 
-import static tests.TestData.*;
+import java.util.stream.Stream;
+
+import static tests.TestDataDemoQA.*;
 
 public class StudentRegistrationPageTests extends TestBaseDemoQA {
     StudentRegistrationPage studentRegistrationPage = new StudentRegistrationPage();
@@ -60,10 +66,10 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
                 .setGender(gender)
                 .setUserNumber(phoneNumber)
                 .submitForm();
-        studentRegistrationPage.checkEmptyInput("firstNameInput")
-                .checkiFilledInput("lastNameInput", lastName)
+        studentRegistrationPage.checkInvalidFilledInput("firstNameInput")
+                .checkValidFilledInput("lastNameInput", lastName)
                 .checkFilledRadioButton(gender)
-                .checkiFilledInput("userNumberInput", phoneNumber);
+                .checkValidFilledInput("userNumberInput", phoneNumber);
     }
 
     @Test
@@ -74,10 +80,10 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
                 .setGender(gender)
                 .setUserNumber(phoneNumber)
                 .submitForm();
-        studentRegistrationPage.checkEmptyInput("lastNameInput")
-                .checkiFilledInput("firstNameInput", firstName)
+        studentRegistrationPage.checkInvalidFilledInput("lastNameInput")
+                .checkValidFilledInput("firstNameInput", firstName)
                 .checkFilledRadioButton(gender)
-                .checkiFilledInput("userNumberInput", phoneNumber);
+                .checkValidFilledInput("userNumberInput", phoneNumber);
     }
 
     @Test
@@ -85,9 +91,49 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
     public void unsuccessSubmitRegFormWithoutRequiredFieldsTest() {
         studentRegistrationPage.openPage()
                 .submitForm();
-        studentRegistrationPage.checkEmptyInput("firstNameInput")
-                .checkEmptyInput("lastNameInput")
-                .checkEmptyInput("userNumberInput")
+        studentRegistrationPage.checkInvalidFilledInput("firstNameInput")
+                .checkInvalidFilledInput("lastNameInput")
+                .checkInvalidFilledInput("userNumberInput")
                 .checkEmptyRadioButton();
+    }
+
+    @ParameterizedTest(name="Ошибка валидации поля Mobile при вводе номера \"{0}\" меньше 10 цифр")
+    @ValueSource(strings = {"9", "999123", "999123457"})
+    public void mobileFieldErrorWhenNumberLessThan10DigitsTest(String phoneNumber) {
+        studentRegistrationPage.openPage()
+                .setUserNumber(phoneNumber)
+                .submitForm();
+        studentRegistrationPage.checkInvalidFilledInput("userNumberInput");
+    }
+
+    @ParameterizedTest(name="Успешная валидации поля First Name с текстом \"{0}\"")
+    @CsvSource(value = {"Игорь", "Mike", "美"})
+    public void successValidationFirstNameFieldTest(String firstName) {
+        studentRegistrationPage.openPage()
+                .setFirstName(firstName)
+                .submitForm();
+        studentRegistrationPage.checkValidFilledInput("firstNameInput", firstName);
+    }
+
+    @ParameterizedTest(name="Успешная валидации поля Last Name с текстом \"{0}\"")
+    @CsvSource(value = {"Иванов", "Smith", "赵"})
+    public void successValidationLastNameFieldTest(String lastName) {
+        studentRegistrationPage.openPage()
+                .setLastName(lastName)
+                .submitForm();
+        studentRegistrationPage.checkValidFilledInput("lastNameInput", lastName);
+    }
+
+    static Stream<String> emailFieldErrorWithIncorrectMailTest() {
+        return Stream.of("q2qmail.ru", "q2q@mailru", "q2q?@mail.ru", "q2q @mail.ru", " ");
+    }
+
+    @ParameterizedTest(name="Ошибка валидации поля Email при некорректном значении \"{0}\"")
+    @MethodSource
+    public void emailFieldErrorWithIncorrectMailTest(String email) {
+        studentRegistrationPage.openPage()
+                .setUserEmail(email)
+                .submitForm();
+        studentRegistrationPage.checkInvalidFilledInput("userEmailInput");
     }
 }

@@ -5,13 +5,13 @@ import pages.components.CalendarComponent;
 import pages.components.Input;
 import pages.components.RadioButton;
 import pages.components.ResultTable;
-import tests.TestData;
+import tests.TestDataDemoQA;
 
 import static com.codeborne.selenide.Condition.exactValue;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
-import static tests.TestData.*;
+import static tests.TestDataDemoQA.*;
 
 public class StudentRegistrationPage {
     private final CalendarComponent calendarComponent = new CalendarComponent();
@@ -31,9 +31,9 @@ public class StudentRegistrationPage {
             uploadPictureBtn = $("#uploadPicture"),
             addressInput = $("#currentAddress"),
             stateSelect = $("#state"),
-            stateSelectPoint = $(byText(TestData.stateSelectPoint)),
+            stateSelectPoint = $(byText(TestDataDemoQA.stateSelectPoint)),
             citySelect = $("#city"),
-            citySelectPoint = $(byText(TestData.citySelectPoint)),
+            citySelectPoint = $(byText(TestDataDemoQA.citySelectPoint)),
             submitBtn = $(".text-right");
 
     public StudentRegistrationPage openPage() {
@@ -111,7 +111,7 @@ public class StudentRegistrationPage {
         return this;
     }
 
-    public StudentRegistrationPage checkEmptyInput(String nameInput) {
+    public StudentRegistrationPage checkInvalidFilledInput(String nameInput) {
         switch (nameInput) {
             case "firstNameInput":
                 input.checkInvalidInput(firstNameInput);
@@ -122,11 +122,14 @@ public class StudentRegistrationPage {
             case "userNumberInput":
                 input.checkInvalidInput(userNumberInput);
                 break;
+            case "userEmailInput":
+                input.checkInvalidInput(userEmailInput);
+                break;
         }
         return this;
     }
 
-    public StudentRegistrationPage checkiFilledInput(String nameInput, String value) {
+    public StudentRegistrationPage checkValidFilledInput(String nameInput, String value) {
         switch (nameInput) {
             case "firstNameInput":
                 firstNameInput.shouldHave(exactValue(value));
