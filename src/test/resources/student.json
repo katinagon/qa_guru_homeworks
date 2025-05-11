@@ -1,0 +1,10 @@
+{
+  "name": "John",
+  "age": 30,
+  "isStudent": true,
+  "courses": ["Math", "History"],
+  "address": {
+    "city": "New York",
+    "index": 10001
+  }
+}
