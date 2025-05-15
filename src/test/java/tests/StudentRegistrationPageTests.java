@@ -1,6 +1,13 @@
 package tests;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -12,11 +19,22 @@ import java.util.stream.Stream;
 
 import static tests.TestDataDemoQA.*;
 
+@Tag("registration form")
+@DisplayName("Тесты формы регистрации студента")
 public class StudentRegistrationPageTests extends TestBaseDemoQA {
     StudentRegistrationPage studentRegistrationPage = new StudentRegistrationPage();
 
-    @Test
+    @BeforeEach
+    public void beforeEach() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+
+    @Tag("submit form")
+    @Feature("Форма регистрации студента")
+    @Story("Успешная отправка формы")
+    @Owner("goncharova-ek")
     @DisplayName("Успешная отправка формы регистрации со всеми заполненными полями")
+    @Test
     public void successSubmitRegFormWithAllFieldsTest() {
         studentRegistrationPage.openPage()
                 .setFirstName(firstName)
@@ -44,8 +62,12 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
                 .checkResult("State and City", stateSelectPoint + " " + citySelectPoint);
     }
 
-    @Test
+    @Tag("submit form")
+    @Feature("Форма регистрации студента")
+    @Story("Успешная отправка формы")
+    @Owner("goncharova-ek")
     @DisplayName("Успешная отправка формы регистрации с обязательными полями")
+    @Test
     public void successSubmitRegFormWithRequiredFieldsTest() {
         studentRegistrationPage.openPage()
                 .setFirstName(firstName)
@@ -58,8 +80,12 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
                 .checkResult("Mobile", phoneNumber);
     }
 
-    @Test
+    @Tag("submit form")
+    @Feature("Форма регистрации студента")
+    @Story("Неуспешная отправка формы")
+    @Owner("goncharova-ek")
     @DisplayName("Неуспешная отправка формы регистрации при незаполненном имени")
+    @Test
     public void unsuccessSubmitRegFormWithoutFirstNameTest() {
         studentRegistrationPage.openPage()
                 .setLastName(lastName)
@@ -72,8 +98,12 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
                 .checkValidFilledInput("userNumberInput", phoneNumber);
     }
 
-    @Test
+    @Tag("submit form")
+    @Feature("Форма регистрации студента")
+    @Story("Неуспешная отправка формы")
+    @Owner("goncharova-ek")
     @DisplayName("Неуспешная отправка формы регистрации при незаполненной фамилии")
+    @Test
     public void unsuccessSubmitRegFormWithoutLastNameTest() {
         studentRegistrationPage.openPage()
                 .setFirstName(firstName)
@@ -86,8 +116,12 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
                 .checkValidFilledInput("userNumberInput", phoneNumber);
     }
 
-    @Test
+    @Tag("submit form")
+    @Feature("Форма регистрации студента")
+    @Story("Неуспешная отправка формы")
+    @Owner("goncharova-ek")
     @DisplayName("Неуспешная отправка формы регистрации при всех незаполненных обязательных полях")
+    @Test
     public void unsuccessSubmitRegFormWithoutRequiredFieldsTest() {
         studentRegistrationPage.openPage()
                 .submitForm();
@@ -97,6 +131,10 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
                 .checkEmptyRadioButton();
     }
 
+    @Tag("validation form")
+    @Feature("Форма регистрации студента")
+    @Story("Валидация полей")
+    @Owner("goncharova-ek")
     @ParameterizedTest(name="Ошибка валидации поля Mobile при вводе номера \"{0}\" меньше 10 цифр")
     @ValueSource(strings = {"9", "999123", "999123457"})
     public void mobileFieldErrorWhenNumberLessThan10DigitsTest(String phoneNumber) {
@@ -106,6 +144,10 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
         studentRegistrationPage.checkInvalidFilledInput("userNumberInput");
     }
 
+    @Tag("validation form")
+    @Feature("Форма регистрации студента")
+    @Story("Валидация полей")
+    @Owner("goncharova-ek")
     @ParameterizedTest(name="Успешная валидации поля First Name с текстом \"{0}\"")
     @CsvSource(value = {"Игорь", "Mike", "美"})
     public void successValidationFirstNameFieldTest(String firstName) {
@@ -115,6 +157,10 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
         studentRegistrationPage.checkValidFilledInput("firstNameInput", firstName);
     }
 
+    @Tag("validation form")
+    @Feature("Форма регистрации студента")
+    @Story("Валидация полей")
+    @Owner("goncharova-ek")
     @ParameterizedTest(name="Успешная валидации поля Last Name с текстом \"{0}\"")
     @CsvSource(value = {"Иванов", "Smith", "赵"})
     public void successValidationLastNameFieldTest(String lastName) {
@@ -128,6 +174,7 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
         return Stream.of("q2qmail.ru", "q2q@mailru", "q2q?@mail.ru", "q2q @mail.ru", " ");
     }
 
+    @Tag("validation form")
     @ParameterizedTest(name="Ошибка валидации поля Email при некорректном значении \"{0}\"")
     @MethodSource
     public void emailFieldErrorWithIncorrectMailTest(String email) {

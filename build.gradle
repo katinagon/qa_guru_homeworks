@@ -5,13 +5,13 @@ plugins {
 
 allure {
     report {
-        version.set("2.30.0")
+        version.set("2.21.0")
     }
     adapter { // отвечает за появление папочки build/allure-results
         aspectjWeaver.set(true) //обработка аннотации @Step
         frameworks {
             junit5 { //название фреймворка
-                adapterVersion.set("2.19.0") //версия интеграции фреймворка и Allure
+                adapterVersion.set("2.21.0") //версия интеграции фреймворка и Allure
             }
         }
     }
@@ -32,11 +32,36 @@ dependencies {
             'com.codeborne:xls-test:1.4.3',
             'com.opencsv:opencsv:5.11',
             'org.assertj:assertj-core:3.27.3',
-            'io.qameta.allure:allure-selenide:2.27.0'
+            'io.qameta.allure:allure-selenide:2.21.0'
     )
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-test {
+tasks.withType(Test) {
     useJUnitPlatform()
+
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
+}
+
+task registration_form_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("registration form")
+    }
+}
+
+task submit_form_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("submit form")
+    }
+}
+
+task validation_form_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("validation form")
+    }
 }
