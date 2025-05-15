@@ -1,14 +1,12 @@
 package tests;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
+import helpers.Attach;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import io.qameta.allure.selenide.AllureSelenide;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -27,6 +25,14 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
     @BeforeEach
     public void beforeEach() {
         SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+
+    @AfterEach
+    public void afterEach() {
+        Attach.screenshotAs("Скриншот результата");
+        Attach.pageSource();
+        Attach.browserConsoleLogs();
+        Attach.addVideo();
     }
 
     @Tag("submit_form")
