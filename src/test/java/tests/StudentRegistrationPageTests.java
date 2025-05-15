@@ -1,6 +1,7 @@
 package tests;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import helpers.Attach;
 import io.qameta.allure.Feature;
@@ -16,6 +17,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import pages.StudentRegistrationPage;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static tests.TestDataDemoQA.*;
@@ -31,10 +33,12 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
                 "enableVNC", true,
-                "enableVideo", true
+                "enableVideo", true,
+                "name", "Test: " + UUID.randomUUID()
         ));
         Configuration.browserCapabilities = capabilities;
         Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
+        Configuration.holdBrowserOpen = false;
     }
 
     @AfterEach
@@ -43,6 +47,7 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
         Attach.pageSource();
         Attach.browserConsoleLogs();
         Attach.addVideo();
+        Selenide.closeWebDriver();
     }
 
     @Tag("submit_form")
