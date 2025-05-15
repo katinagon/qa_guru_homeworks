@@ -50,18 +50,18 @@ tasks.withType(Test) {
 
 task registration_form_test(type: Test) {
     useJUnitPlatform {
-        includeTags("registration form")
+        includeTags("registration_form")
     }
 }
 
 task submit_form_test(type: Test) {
     useJUnitPlatform {
-        includeTags("submit form")
+        includeTags("submit_form")
     }
 }
 
 task validation_form_test(type: Test) {
     useJUnitPlatform {
-        includeTags("validation form")
+        includeTags("validation_form")
     }
 }

@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 
 import static tests.TestDataDemoQA.*;
 
-@Tag("registration form")
+@Tag("registration_form")
 @DisplayName("Тесты формы регистрации студента")
 public class StudentRegistrationPageTests extends TestBaseDemoQA {
     StudentRegistrationPage studentRegistrationPage = new StudentRegistrationPage();
@@ -29,7 +29,7 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
-    @Tag("submit form")
+    @Tag("submit_form")
     @Feature("Форма регистрации студента")
     @Story("Успешная отправка формы")
     @Owner("goncharova-ek")
@@ -62,7 +62,7 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
                 .checkResult("State and City", stateSelectPoint + " " + citySelectPoint);
     }
 
-    @Tag("submit form")
+    @Tag("submit_form")
     @Feature("Форма регистрации студента")
     @Story("Успешная отправка формы")
     @Owner("goncharova-ek")
@@ -80,7 +80,7 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
                 .checkResult("Mobile", phoneNumber);
     }
 
-    @Tag("submit form")
+    @Tag("submit_form")
     @Feature("Форма регистрации студента")
     @Story("Неуспешная отправка формы")
     @Owner("goncharova-ek")
@@ -98,7 +98,7 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
                 .checkValidFilledInput("userNumberInput", phoneNumber);
     }
 
-    @Tag("submit form")
+    @Tag("submit_form")
     @Feature("Форма регистрации студента")
     @Story("Неуспешная отправка формы")
     @Owner("goncharova-ek")
@@ -116,7 +116,7 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
                 .checkValidFilledInput("userNumberInput", phoneNumber);
     }
 
-    @Tag("submit form")
+    @Tag("submit_form")
     @Feature("Форма регистрации студента")
     @Story("Неуспешная отправка формы")
     @Owner("goncharova-ek")
@@ -131,7 +131,7 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
                 .checkEmptyRadioButton();
     }
 
-    @Tag("validation form")
+    @Tag("validation_form")
     @Feature("Форма регистрации студента")
     @Story("Валидация полей")
     @Owner("goncharova-ek")
@@ -144,7 +144,7 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
         studentRegistrationPage.checkInvalidFilledInput("userNumberInput");
     }
 
-    @Tag("validation form")
+    @Tag("validation_form")
     @Feature("Форма регистрации студента")
     @Story("Валидация полей")
     @Owner("goncharova-ek")
@@ -157,7 +157,7 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
         studentRegistrationPage.checkValidFilledInput("firstNameInput", firstName);
     }
 
-    @Tag("validation form")
+    @Tag("validation_form")
     @Feature("Форма регистрации студента")
     @Story("Валидация полей")
     @Owner("goncharova-ek")
@@ -174,7 +174,7 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
         return Stream.of("q2qmail.ru", "q2q@mailru", "q2q?@mail.ru", "q2q @mail.ru", " ");
     }
 
-    @Tag("validation form")
+    @Tag("validation_form")
     @ParameterizedTest(name="Ошибка валидации поля Email при некорректном значении \"{0}\"")
     @MethodSource
     public void emailFieldErrorWithIncorrectMailTest(String email) {
