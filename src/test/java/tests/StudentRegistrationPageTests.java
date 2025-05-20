@@ -38,7 +38,6 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
         ));
         Configuration.browserCapabilities = capabilities;
         Configuration.holdBrowserOpen = false;
-        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
     }
 
     @AfterEach

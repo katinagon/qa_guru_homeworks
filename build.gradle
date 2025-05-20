@@ -66,21 +66,3 @@ task validation_form_test(type: Test) {
         includeTags("validation_form")
     }
 }
-
-task chrome_test(type: Test) {
-    useJUnitPlatform {
-        includeTags("chrome")
-    }
-}
-
-task firefox_test(type: Test) {
-    useJUnitPlatform {
-        includeTags("firefox")
-    }
-}
-
-task opera_test(type: Test) {
-    useJUnitPlatform {
-        includeTags("opera")
-    }
-}
