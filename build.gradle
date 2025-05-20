@@ -39,6 +39,7 @@ dependencies {
 
 tasks.withType(Test) {
     useJUnitPlatform()
+    systemProperties(System.getProperties())
 
     testLogging {
         lifecycle {
@@ -63,5 +64,23 @@ task submit_form_test(type: Test) {
 task validation_form_test(type: Test) {
     useJUnitPlatform {
         includeTags("validation_form")
+    }
+}
+
+task chrome_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("chrome")
+    }
+}
+
+task firefox_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("firefox")
+    }
+}
+
+task opera_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("opera")
     }
 }
