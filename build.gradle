@@ -32,8 +32,7 @@ dependencies {
             'com.codeborne:xls-test:1.4.3',
             'com.opencsv:opencsv:5.11',
             'org.assertj:assertj-core:3.27.3',
-            'io.qameta.allure:allure-selenide:2.21.0',
-            'org.seleniumhq.selenium:selenium-opera-driver:3.141.0'
+            'io.qameta.allure:allure-selenide:2.21.0'
     )
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
