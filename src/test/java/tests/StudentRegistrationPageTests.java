@@ -48,7 +48,8 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
     public void afterEach() {
         Attach.screenshotAs("Скриншот результата");
         Attach.pageSource();
-        Attach.browserConsoleLogs();
+        if (!Configuration.browser.equals("firefox"))
+            Attach.browserConsoleLogs();
         Attach.addVideo();
         Selenide.closeWebDriver();
     }
