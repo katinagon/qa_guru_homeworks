@@ -25,6 +25,9 @@ import static tests.TestDataDemoQA.*;
 @Tag("registration_form")
 @DisplayName("Тесты формы регистрации студента")
 public class StudentRegistrationPageTests extends TestBaseDemoQA {
+    private static final String SELENOID_URL = System.getProperty("selenoid.url");
+    private static final String SELENOID_LOGIN = System.getProperty("selenoid.login");;
+    private static final String SELENOID_PASSWORD = System.getProperty("selenoid.password");
     StudentRegistrationPage studentRegistrationPage = new StudentRegistrationPage();
 
     @BeforeEach
@@ -36,6 +39,7 @@ public class StudentRegistrationPageTests extends TestBaseDemoQA {
                 "enableVideo", true,
                 "name", "Test: " + UUID.randomUUID()
         ));
+        Configuration.remote = "https://" + SELENOID_LOGIN + ":" + SELENOID_PASSWORD + "@" + SELENOID_URL + "/wd/hub";
         Configuration.browserCapabilities = capabilities;
         Configuration.holdBrowserOpen = false;
     }
