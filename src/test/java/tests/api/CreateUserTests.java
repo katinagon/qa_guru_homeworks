@@ -12,7 +12,6 @@ import static org.hamcrest.Matchers.*;
 @Owner("goncharova-ek")
 @DisplayName("Тесты на создание пользователя")
 public class CreateUserTests extends ReqresTestBase {
-    String userId;
 
     @DisplayName("Успешное создание пользователя")
     @Test
