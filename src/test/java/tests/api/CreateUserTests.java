@@ -1,14 +1,25 @@
 package tests.api;
 
 import io.qameta.allure.Owner;
+import model.lombok.UserRequestBodyModel;
+import model.lombok.UserResponseBodyModel;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
-import static io.restassured.RestAssured.baseURI;
+import static com.codeborne.selenide.logevents.SelenideLogger.step;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static specs.CreateUserSpec.createUserRequestSpec;
+import static specs.CreateUserSpec.createUserResponseSpec;
 
+@Tags({
+        @Tag("api"),
+        @Tag("create_user_api")
+})
 @Owner("goncharova-ek")
 @DisplayName("Тесты на создание пользователя")
 public class CreateUserTests extends ReqresTestBase {
@@ -16,64 +27,82 @@ public class CreateUserTests extends ReqresTestBase {
     @DisplayName("Успешное создание пользователя")
     @Test
     public void successfulCreateUserTest() {
-        String userData = "{\"name\": \"morpheus\", \"job\": \"leader\"}";
+        UserRequestBodyModel userData = new UserRequestBodyModel();
+        userData.setName("morpheus");
+        userData.setJob("leader");
 
-        given()
-                .header("x-api-key", apiKey)
-                .contentType(JSON)
-                .body(userData)
-                .log().uri()
-        .when()
-                .post(baseURI + usersEP)
-        .then()
-                .log().status()
-                .log().body()
-                .statusCode(201)
-                .body("name", is("morpheus"))
-                .body("job", is("leader"))
-                .body("id", not(emptyOrNullString()))
-                .body("createdAt", not(emptyOrNullString()));
+        UserResponseBodyModel response = step("Отправляем запрос", () ->
+                given(createUserRequestSpec)
+                        .body(userData)
+                .when()
+                        .post()
+                .then()
+                        .spec(createUserResponseSpec)
+                        .extract().as(UserResponseBodyModel.class)
+        );
+
+        step("Проверяем name в ответе", () ->
+                        assertEquals("morpheus", response.getName()));
+
+        step("Проверяем job в ответе", () ->
+                assertEquals("leader", response.getJob()));
+
+        step("Проверяем id в ответе", () ->
+                assertThat(response.getId(), not(emptyOrNullString())));
+
+        step("Проверяем createdAt в ответе", () ->
+                assertThat(response.getCreatedAt(), not(emptyOrNullString())));
     }
 
     @DisplayName("Успешное создание пользователя без имени в запросе")
     @Test
     public void successfulCreateUserWithoutNameTest() {
-        String userData = "{\"job\": \"leader\"}";
+        UserRequestBodyModel userData = new UserRequestBodyModel();
+        userData.setJob("leader");
 
-        given()
-                .header("x-api-key", apiKey)
-                .contentType(JSON)
-                .body(userData)
-                .log().uri()
+        UserResponseBodyModel response = step("Отправляем запрос", () ->
+                given(createUserRequestSpec)
+                        .body(userData)
                 .when()
-                .post(baseURI + usersEP)
+                        .post()
                 .then()
-                .log().status()
-                .log().body()
-                .statusCode(201)
-                .body("job", is("leader"))
-                .body("id", not(emptyOrNullString()))
-                .body("createdAt", not(emptyOrNullString()));
+                        .spec(createUserResponseSpec)
+                        .extract().as(UserResponseBodyModel.class)
+        );
+
+        step("Проверяем job в ответе", () ->
+                assertEquals("leader", response.getJob()));
+
+        step("Проверяем id в ответе", () ->
+                assertThat(response.getId(), not(emptyOrNullString())));
+
+        step("Проверяем createdAt в ответе", () ->
+                assertThat(response.getCreatedAt(), not(emptyOrNullString())));
     }
 
     @DisplayName("Успешное создание пользователя без работы в запросе")
     @Test
     public void successfulCreateUserWithoutJobTest() {
-        String userData = "{\"name\": \"morpheus\"}";
+        UserRequestBodyModel userData = new UserRequestBodyModel();
+        userData.setName("morpheus");
 
-        given()
-                .header("x-api-key", apiKey)
-                .contentType(JSON)
-                .body(userData)
-                .log().uri()
+        UserResponseBodyModel response = step("Отправляем запрос", () ->
+                given(createUserRequestSpec)
+                        .body(userData)
                 .when()
-                .post(baseURI + usersEP)
+                        .post()
                 .then()
-                .log().status()
-                .log().body()
-                .statusCode(201)
-                .body("name", is("morpheus"))
-                .body("id", not(emptyOrNullString()))
-                .body("createdAt", not(emptyOrNullString()));
+                        .spec(createUserResponseSpec)
+                        .extract().as(UserResponseBodyModel.class)
+        );
+
+        step("Проверяем name в ответе", () ->
+                assertEquals("morpheus", response.getName()));
+
+        step("Проверяем id в ответе", () ->
+                assertThat(response.getId(), not(emptyOrNullString())));
+
+        step("Проверяем createdAt в ответе", () ->
+                assertThat(response.getCreatedAt(), not(emptyOrNullString())));
     }
 }

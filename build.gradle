@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'io.qameta.allure' version '2.12.0'
+    id("io.freefair.lombok") version "8.13.1"
 }
 
 allure {
@@ -33,7 +34,10 @@ dependencies {
             'com.opencsv:opencsv:5.11',
             'org.assertj:assertj-core:3.27.3',
             'io.qameta.allure:allure-selenide:2.21.0',
-            'io.rest-assured:rest-assured:5.5.5'
+            'io.rest-assured:rest-assured:5.5.5',
+            "io.rest-assured:json-schema-validator:5.5.5",
+            "io.qameta.allure:allure-rest-assured:2.21.0",
+            'io.qameta.allure:allure-attachments:2.21.0'
     )
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
@@ -65,5 +69,23 @@ task submit_form_test(type: Test) {
 task validation_form_test(type: Test) {
     useJUnitPlatform {
         includeTags("validation_form")
+    }
+}
+
+task delete_user_api_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("delete_user_api")
+    }
+}
+
+task create_user_api_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("create_user_api")
+    }
+}
+
+task update_user_api_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("update_user_api")
     }
 }

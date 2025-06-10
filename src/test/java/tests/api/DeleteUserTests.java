@@ -1,14 +1,19 @@
 package tests.api;
 
 import io.qameta.allure.Owner;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import model.lombok.UserRequestBodyModel;
+import model.lombok.UserResponseBodyModel;
+import org.junit.jupiter.api.*;
 
-import static io.restassured.RestAssured.baseURI;
+import static com.codeborne.selenide.logevents.SelenideLogger.step;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
+import static specs.CreateUserSpec.*;
 
+
+@Tags({
+        @Tag("api"),
+        @Tag("delete_user_api")
+})
 @Owner("goncharova-ek")
 @DisplayName("Тесты на удаление пользователя")
 public class DeleteUserTests extends ReqresTestBase {
@@ -16,30 +21,31 @@ public class DeleteUserTests extends ReqresTestBase {
 
     @BeforeEach
     public void getUserIdTests() {
-        userId =
-                given()
-                        .header("x-api-key", apiKey)
-                        .contentType(JSON)
-                        .body("{\"name\": \"morpheus\", \"job\": \"leader\"}")
-                        .when()
-                        .post(baseURI + usersEP)
-                        .then()
-                        .extract()
-                        .path("id");
+        UserRequestBodyModel userData = new UserRequestBodyModel();
+        userData.setName("fred");
+        userData.setJob("artist");
+
+        UserResponseBodyModel response = step("Создание пользователя перед тестом", () ->
+                given(createUserRequestSpec)
+                        .body(userData)
+                .when()
+                        .post()
+                .then()
+                        .spec(createUserResponseSpec)
+                        .extract().as(UserResponseBodyModel.class)
+        );
+        userId = response.getId();
     }
 
     @DisplayName("Успешное удаление пользователя")
     @Test
     public void successfulUpdateUserViaPutTest() {
-
-        given()
-                .header("x-api-key", apiKey)
-                .log().uri()
-        .when()
-                .delete(baseURI + usersEP + userId)
-        .then()
-                .log().status()
-                .log().body()
-                .statusCode(204);
+        step("Отправляем запрос", () ->
+                given(deleteUserRequestSpec(userId))
+                .when()
+                        .delete()
+                .then()
+                        .spec(deleteUserResponseSpec)
+        );
     }
 }

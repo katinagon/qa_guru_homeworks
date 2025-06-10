@@ -4,8 +4,8 @@ import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 
 public class ReqresTestBase {
-    public String usersEP = "/users/";
-    public String apiKey = "reqres-free-v1";
+    public static String usersEP = "/users/";
+    public static String apiKey = "reqres-free-v1";
 
     @BeforeAll
     public static void beforeAllApi() {
