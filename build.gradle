@@ -92,6 +92,6 @@ task update_user_api_test(type: Test) {
 
 task all_api_test(type: Test) {
     useJUnitPlatform {
-        includeTags("all_api_tests")
+        includeTags("all_api")
     }
 }

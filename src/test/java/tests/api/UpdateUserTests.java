@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static specs.CreateUserSpec.*;
 
 @Tags({
-        @Tag("all_api_tests"),
+        @Tag("all_api"),
         @Tag("update_user_api")
 })
 @Owner("goncharova-ek")
