@@ -11,7 +11,7 @@ import static specs.CreateUserSpec.*;
 
 
 @Tags({
-        @Tag("api"),
+        @Tag("all_api_tests"),
         @Tag("delete_user_api")
 })
 @Owner("goncharova-ek")

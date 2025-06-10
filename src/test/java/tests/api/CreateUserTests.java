@@ -17,7 +17,7 @@ import static specs.CreateUserSpec.createUserRequestSpec;
 import static specs.CreateUserSpec.createUserResponseSpec;
 
 @Tags({
-        @Tag("api"),
+        @Tag("all_api_tests"),
         @Tag("create_user_api")
 })
 @Owner("goncharova-ek")
