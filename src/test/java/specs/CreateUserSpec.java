@@ -3,43 +3,37 @@ package specs;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import tests.api.ReqresTestBase;
 
 import static helpers.CustomAllureListener.withCustomTemplates;
 import static io.restassured.RestAssured.with;
-import static io.restassured.filter.log.LogDetail.BODY;
-import static io.restassured.filter.log.LogDetail.STATUS;
+import static io.restassured.filter.log.LogDetail.*;
 import static io.restassured.http.ContentType.JSON;
 
-public class CreateUserSpec extends ReqresTestBase {
+public class CreateUserSpec {
+    public static String apiKey = "reqres-free-v1";
+
     public static RequestSpecification createUserRequestSpec = with()
             .filter(withCustomTemplates())
             .header("x-api-key", apiKey)
             .log().uri()
             .log().body()
             .log().headers()
-            .contentType(JSON)
-            .basePath(usersEP);
+            .contentType(JSON);
 
-    public static RequestSpecification updateUserRequestSpec(String userId) {
-        return with()
+    public static RequestSpecification updateUserRequestSpec = with()
                 .filter(withCustomTemplates())
                 .header("x-api-key", apiKey)
                 .log().uri()
                 .log().body()
                 .log().headers()
-                .contentType(JSON)
-                .basePath(usersEP + userId);
-    }
+                .contentType(JSON);
 
-    public static RequestSpecification deleteUserRequestSpec(String userId) {
-        return with()
+    public static RequestSpecification deleteUserRequestSpec = with()
                 .filter(withCustomTemplates())
                 .header("x-api-key", apiKey)
                 .log().uri()
-                .log().headers()
-                .basePath(usersEP + userId);
-    }
+                .log().headers();
+
 
     public static ResponseSpecification createUserResponseSpec = new ResponseSpecBuilder()
             .expectStatusCode(201)

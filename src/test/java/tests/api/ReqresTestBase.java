@@ -5,10 +5,10 @@ import org.junit.jupiter.api.BeforeAll;
 
 public class ReqresTestBase {
     public static String usersEP = "/users/";
-    public static String apiKey = "reqres-free-v1";
 
     @BeforeAll
     public static void beforeAllApi() {
-        RestAssured.baseURI = "https://reqres.in/api";
+        RestAssured.baseURI = "https://reqres.in";
+        RestAssured.basePath = "/api";
     }
 }

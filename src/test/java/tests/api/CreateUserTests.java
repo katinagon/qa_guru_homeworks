@@ -1,8 +1,8 @@
 package tests.api;
 
 import io.qameta.allure.Owner;
-import model.lombok.UserRequestBodyModel;
-import model.lombok.UserResponseBodyModel;
+import models.UserRequestBodyModel;
+import models.UserResponseBodyModel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -34,15 +34,15 @@ public class CreateUserTests extends ReqresTestBase {
         UserResponseBodyModel response = step("Отправляем запрос", () ->
                 given(createUserRequestSpec)
                         .body(userData)
-                .when()
-                        .post()
-                .then()
+                        .when()
+                        .post(usersEP)
+                        .then()
                         .spec(createUserResponseSpec)
                         .extract().as(UserResponseBodyModel.class)
         );
 
         step("Проверяем name в ответе", () ->
-                        assertEquals("morpheus", response.getName()));
+                assertEquals("morpheus", response.getName()));
 
         step("Проверяем job в ответе", () ->
                 assertEquals("leader", response.getJob()));
@@ -63,9 +63,9 @@ public class CreateUserTests extends ReqresTestBase {
         UserResponseBodyModel response = step("Отправляем запрос", () ->
                 given(createUserRequestSpec)
                         .body(userData)
-                .when()
-                        .post()
-                .then()
+                        .when()
+                        .post(usersEP)
+                        .then()
                         .spec(createUserResponseSpec)
                         .extract().as(UserResponseBodyModel.class)
         );
@@ -89,9 +89,9 @@ public class CreateUserTests extends ReqresTestBase {
         UserResponseBodyModel response = step("Отправляем запрос", () ->
                 given(createUserRequestSpec)
                         .body(userData)
-                .when()
-                        .post()
-                .then()
+                        .when()
+                        .post(usersEP)
+                        .then()
                         .spec(createUserResponseSpec)
                         .extract().as(UserResponseBodyModel.class)
         );

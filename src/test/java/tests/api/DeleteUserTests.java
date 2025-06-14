@@ -1,8 +1,8 @@
 package tests.api;
 
 import io.qameta.allure.Owner;
-import model.lombok.UserRequestBodyModel;
-import model.lombok.UserResponseBodyModel;
+import models.UserRequestBodyModel;
+import models.UserResponseBodyModel;
 import org.junit.jupiter.api.*;
 
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
@@ -28,9 +28,9 @@ public class DeleteUserTests extends ReqresTestBase {
         UserResponseBodyModel response = step("Создание пользователя перед тестом", () ->
                 given(createUserRequestSpec)
                         .body(userData)
-                .when()
-                        .post()
-                .then()
+                        .when()
+                        .post(usersEP)
+                        .then()
                         .spec(createUserResponseSpec)
                         .extract().as(UserResponseBodyModel.class)
         );
@@ -41,10 +41,10 @@ public class DeleteUserTests extends ReqresTestBase {
     @Test
     public void successfulUpdateUserViaPutTest() {
         step("Отправляем запрос", () ->
-                given(deleteUserRequestSpec(userId))
-                .when()
-                        .delete()
-                .then()
+                given(deleteUserRequestSpec)
+                        .when()
+                        .delete(usersEP + userId)
+                        .then()
                         .spec(deleteUserResponseSpec)
         );
     }
