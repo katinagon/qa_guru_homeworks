@@ -26,12 +26,12 @@ public class DeleteUserTests extends ReqresTestBase {
         userData.setJob("artist");
 
         UserResponseBodyModel response = step("Создание пользователя перед тестом", () ->
-                given(createUserRequestSpec)
+                given(baseRequestSpec)
                         .body(userData)
                         .when()
                         .post(usersEP)
                         .then()
-                        .spec(createUserResponseSpec)
+                        .spec(baseResponseSpec(201))
                         .extract().as(UserResponseBodyModel.class)
         );
         userId = response.getId();
@@ -41,11 +41,11 @@ public class DeleteUserTests extends ReqresTestBase {
     @Test
     public void successfulUpdateUserViaPutTest() {
         step("Отправляем запрос", () ->
-                given(deleteUserRequestSpec)
+                given(baseRequestSpec)
                         .when()
                         .delete(usersEP + userId)
                         .then()
-                        .spec(deleteUserResponseSpec)
+                        .spec(baseResponseSpec(204))
         );
     }
 }

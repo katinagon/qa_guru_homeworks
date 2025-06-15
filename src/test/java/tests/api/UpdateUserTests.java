@@ -28,12 +28,12 @@ public class UpdateUserTests extends ReqresTestBase {
         userData.setJob("artist");
 
         UserResponseBodyModel response = step("Создание пользователя перед тестом", () ->
-                given(createUserRequestSpec)
+                given(baseRequestSpec)
                         .body(userData)
                         .when()
                         .post(usersEP)
                         .then()
-                        .spec(createUserResponseSpec)
+                        .spec(baseResponseSpec(201))
                         .extract().as(UserResponseBodyModel.class)
         );
         userId = response.getId();
@@ -47,12 +47,12 @@ public class UpdateUserTests extends ReqresTestBase {
         userData.setJob("artist");
 
         UserResponseBodyModel response = step("Отправляем запрос", () ->
-                given(updateUserRequestSpec)
+                given(baseRequestSpec)
                         .body(userData)
                         .when()
                         .put(usersEP + userId)
                         .then()
-                        .spec(updateUserResponseSpec)
+                        .spec(baseResponseSpec(200))
                         .extract().as(UserResponseBodyModel.class)
         );
 
@@ -73,12 +73,12 @@ public class UpdateUserTests extends ReqresTestBase {
         userData.setName("mike");
 
         UserResponseBodyModel response = step("Отправляем запрос", () ->
-                given(updateUserRequestSpec)
+                given(baseRequestSpec)
                         .body(userData)
                         .when()
                         .put(usersEP + userId)
                         .then()
-                        .spec(updateUserResponseSpec)
+                        .spec(baseResponseSpec(200))
                         .extract().as(UserResponseBodyModel.class)
         );
 
@@ -96,12 +96,12 @@ public class UpdateUserTests extends ReqresTestBase {
         userData.setJob("QA");
 
         UserResponseBodyModel response = step("Отправляем запрос", () ->
-                given(updateUserRequestSpec)
+                given(baseRequestSpec)
                         .body(userData)
                         .when()
                         .put(usersEP + userId)
                         .then()
-                        .spec(updateUserResponseSpec)
+                        .spec(baseResponseSpec(200))
                         .extract().as(UserResponseBodyModel.class)
         );
 
@@ -120,12 +120,12 @@ public class UpdateUserTests extends ReqresTestBase {
         userData.setJob("teacher");
 
         UserResponseBodyModel response = step("Отправляем запрос", () ->
-                given(updateUserRequestSpec)
+                given(baseRequestSpec)
                         .body(userData)
                         .when()
                         .patch(usersEP + userId)
                         .then()
-                        .spec(updateUserResponseSpec)
+                        .spec(baseResponseSpec(200))
                         .extract().as(UserResponseBodyModel.class)
         );
 
@@ -146,12 +146,12 @@ public class UpdateUserTests extends ReqresTestBase {
         userData.setName("leon");
 
         UserResponseBodyModel response = step("Отправляем запрос", () ->
-                given(updateUserRequestSpec)
+                given(baseRequestSpec)
                         .body(userData)
                         .when()
                         .patch(usersEP + userId)
                         .then()
-                        .spec(updateUserResponseSpec)
+                        .spec(baseResponseSpec(200))
                         .extract().as(UserResponseBodyModel.class)
         );
 
@@ -169,12 +169,12 @@ public class UpdateUserTests extends ReqresTestBase {
         userData.setJob("manager");
 
         UserResponseBodyModel response = step("Отправляем запрос", () ->
-                given(updateUserRequestSpec)
+                given(baseRequestSpec)
                         .body(userData)
                         .when()
                         .patch(usersEP + userId)
                         .then()
-                        .spec(updateUserResponseSpec)
+                        .spec(baseResponseSpec(200))
                         .extract().as(UserResponseBodyModel.class)
         );
 

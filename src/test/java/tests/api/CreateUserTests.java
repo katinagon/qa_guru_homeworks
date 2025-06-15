@@ -13,8 +13,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static specs.CreateUserSpec.createUserRequestSpec;
-import static specs.CreateUserSpec.createUserResponseSpec;
+import static specs.CreateUserSpec.*;
 
 @Tags({
         @Tag("all_api"),
@@ -32,12 +31,12 @@ public class CreateUserTests extends ReqresTestBase {
         userData.setJob("leader");
 
         UserResponseBodyModel response = step("Отправляем запрос", () ->
-                given(createUserRequestSpec)
+                given(baseRequestSpec)
                         .body(userData)
                         .when()
                         .post(usersEP)
                         .then()
-                        .spec(createUserResponseSpec)
+                        .spec(baseResponseSpec(201))
                         .extract().as(UserResponseBodyModel.class)
         );
 
@@ -61,12 +60,12 @@ public class CreateUserTests extends ReqresTestBase {
         userData.setJob("leader");
 
         UserResponseBodyModel response = step("Отправляем запрос", () ->
-                given(createUserRequestSpec)
+                given(baseRequestSpec)
                         .body(userData)
                         .when()
                         .post(usersEP)
                         .then()
-                        .spec(createUserResponseSpec)
+                        .spec(baseResponseSpec(201))
                         .extract().as(UserResponseBodyModel.class)
         );
 
@@ -87,12 +86,12 @@ public class CreateUserTests extends ReqresTestBase {
         userData.setName("morpheus");
 
         UserResponseBodyModel response = step("Отправляем запрос", () ->
-                given(createUserRequestSpec)
+                given(baseRequestSpec)
                         .body(userData)
                         .when()
                         .post(usersEP)
                         .then()
-                        .spec(createUserResponseSpec)
+                        .spec(baseResponseSpec(201))
                         .extract().as(UserResponseBodyModel.class)
         );
 
