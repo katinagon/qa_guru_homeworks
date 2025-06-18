@@ -7,7 +7,7 @@ import org.junit.jupiter.api.*;
 
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
 import static io.restassured.RestAssured.given;
-import static specs.CreateUserSpec.*;
+import static specs.BaseSpecs.*;
 
 
 @Tags({

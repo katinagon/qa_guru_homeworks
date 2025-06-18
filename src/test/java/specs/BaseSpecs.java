@@ -9,7 +9,7 @@ import static io.restassured.RestAssured.with;
 import static io.restassured.filter.log.LogDetail.*;
 import static io.restassured.http.ContentType.JSON;
 
-public class CreateUserSpec {
+public class BaseSpecs {
     public static String apiKey = "reqres-free-v1";
 
     public static RequestSpecification baseRequestSpec = with()

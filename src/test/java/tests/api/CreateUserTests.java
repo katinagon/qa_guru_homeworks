@@ -13,7 +13,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static specs.CreateUserSpec.*;
+import static specs.BaseSpecs.*;
 
 @Tags({
         @Tag("all_api"),
